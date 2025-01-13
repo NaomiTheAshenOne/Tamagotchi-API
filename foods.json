@@ -1,9 +1,19 @@
 {
   "Monster Eneregy": {
-                      atrributes
-                      attributes
+                      water: 15
+                      happiness: 10
                       }
-  "SteakBake": str,
-  "Saussage Roll": str,
-  "Juice that makes your head explode": str,
-  }
+  "SteakBake": {
+                food: 15
+                happiness: 10
+                }
+  "Sausage Roll": {
+                    food: 10
+                    happiness: 20
+                    }
+  "Juice that makes your head explode": {
+                                          water: 30
+                                          happiness: -10
+                                          }
+  
+}
