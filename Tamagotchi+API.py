@@ -53,7 +53,6 @@ namigotchi.simulate()
 #namigotchi.interface()
 app = Flask(__name__)
 
-
 @app.route('/Hai', methods=["GET"])
 def status():
     return [
@@ -72,6 +71,22 @@ def status():
             "happiMessage": "gay :3",
             "lastPlayedWith": "never - loner >:3"
         }
+    }
+]
+
+@app.route('/Motd', methods=["GET"])
+def Motd():
+    return [
+    {
+        "motd": "funnie message go here lol x3"
+    }
+]
+
+@app.route('/FoodList', methods=["GET"])
+def FoodList():
+    return [
+    {
+        "foods": "food go here lol"       #list[str]
     }
 ]
 
