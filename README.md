@@ -1,5 +1,5 @@
 # Tamagotchi-API
-API for interacting with a community Tamagotchi
+API for interacting with a community Tamagotchi, first time doing API stuffs :D - this is going to be a lil messy X3
 
 ## Endpoints
 
