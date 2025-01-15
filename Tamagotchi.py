@@ -1,3 +1,4 @@
+from flask import Flask, jsonify, request
 import time, random, threading
 
 #Silly tamagotchi stat simulation :3
@@ -49,4 +50,30 @@ class tamagotchi():
 
 namigotchi = tamagotchi()
 namigotchi.simulate()
-namigotchi.interface()
+#namigotchi.interface()
+app = Flask(__name__)
+
+
+@app.route('/Hai', methods=["GET"])
+def status():
+    return [
+    {
+        "name": namigotchi.name,
+        "food": {
+            "hunger": str(namigotchi.food),
+            "lastFed": "never :3"
+        },
+        "water": {
+            "thirst": str(namigotchi.water),
+            "lastWatered": "your meant to water them?!?!?!"
+        },
+        "happiness": {
+            "happiScore": str(namigotchi.happiness),
+            "happiMessage": "gay :3",
+            "lastPlayedWith": "never - loner >:3"
+        }
+    }
+]
+
+if __name__ == "__main__":
+    app.run(debug=True)
