@@ -135,6 +135,15 @@ def FoodList():
         }
 ]
 
+@app.get('/drinkList')
+def drinkList():
+    drinks = json.load(open("drinks.json"))
+    return [
+        {
+            "foods": drinks
+        }
+]
+
 @app.post("/scran")
 def Scran(food: str):
     foodList = json.load(open("foods.json"))
@@ -147,6 +156,23 @@ def Scran(food: str):
                 namigotchi.food = 100
             if namigotchi.food < 0:
                 namigotchi.food = 0
+        if "happiness" in foodItem:
+            namigotchi.happiness = namigotchi.happiness + foodItem["happiness"]
+            if namigotchi.happiness > 100:
+                namigotchi.happiness = 100
+            if namigotchi.happiness < 0:
+                namigotchi.happiness = 0
+        return (f"{food} was consumed :D")
+
+    else:
+        return (f"{food} not found :<")
+
+@app.post("/hydrate")
+def Scran(drink: str):
+    drinkList = json.load(open("drinks.json"))
+    #If the food entered exists it adds the stats :D
+    if drink in drinkList:
+        foodItem = drinkList[drink]
         if "water" in foodItem:
             namigotchi.water = namigotchi.water + foodItem["water"]
             if namigotchi.water > 100:
@@ -159,7 +185,7 @@ def Scran(food: str):
                 namigotchi.happiness = 100
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
-        return (f"{food} was consumed :D")
+        return (f"{drink} was consumed :D")
 
     else:
-        return (f"{food} not found :<")
+        return (f"{drink} not found :<")

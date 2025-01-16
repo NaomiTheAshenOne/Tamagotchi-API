@@ -1,0 +1,19 @@
+{
+    "Monster Energy": {
+                        "water": 15,
+                        "happiness": 10
+                        },
+    "Rum": {
+                  "water": -10,
+                  "happiness": 25
+                  },
+    "water": {
+                      "water": 10,
+                      "happiness": 5
+                      },
+    "Juice that makes your head explode": {
+                                            "water": 30,
+                                            "happiness": -10
+                                            }
+    
+  }

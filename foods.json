@@ -1,6 +1,6 @@
 {
-    "Monster Energy": {
-                        "water": 15,
+    "Borgor": {
+                        "food": 35,
                         "happiness": 10
                         },
     "SteakBake": {
@@ -11,8 +11,8 @@
                       "food": 10,
                       "happiness": 20
                       },
-    "Juice that makes your head explode": {
-                                            "water": 30,
+    "Chicken": {
+                                            "food": 30,
                                             "happiness": -10
                                             }
     
