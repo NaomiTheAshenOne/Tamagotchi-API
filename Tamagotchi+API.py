@@ -46,11 +46,11 @@ class tamagotchi():
     def simulate(self):
         foodThread = threading.Thread(target=self.lowerFood)
         waterThread = threading.Thread(target=self.lowerWater)
-        HappiThread = threading.Thread(target=self.lowerHappi)
+        happiThread = threading.Thread(target=self.lowerHappi)
 
         foodThread.start()
         waterThread.start()
-        HappiThread.start()
+        happiThread.start()
     
     #Currently just a debug output :P
     def interface(self):
