@@ -64,7 +64,7 @@ namigotchi.simulate()
 #namigotchi.interface()
 app = Flask(__name__)
 
-@app.route('/Hai', methods=["GET"])
+@app.route('/hai', methods=["GET"])
 def status():
     return [
     {
@@ -85,7 +85,7 @@ def status():
     }
 ]
 
-@app.route('/Motd', methods=["GET"])
+@app.route('/motd', methods=["GET"])
 def Motd():
     #Gives the day, i.e monday, as a number :3
     theTime = time.localtime()
@@ -103,16 +103,19 @@ def Motd():
     }
 ]
 
-@app.route('/FoodList', methods=["GET"])
+@app.route('/foodList', methods=["GET"])
 def FoodList():
+    foods = json.load(open("foods.json"))
     return [
-    {
-        "foods": "food go here lol"       #list[str]
-    }
+        {
+            "foods": foods
+        }
 ]
 
-#@app.route('/Play', methods=["POST"])
-#def Play():
+#@app.route("/play", methods=["POST"])
+#def play():
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
