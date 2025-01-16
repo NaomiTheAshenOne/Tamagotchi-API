@@ -1,5 +1,5 @@
 from flask import Flask
-import time, random, threading, jsonify, json
+import time, random, threading, jsonify, json, time
 
 #Silly tamagotchi stat simulation :3
 class tamagotchi():
@@ -87,9 +87,17 @@ def status():
 
 @app.route('/Motd', methods=["GET"])
 def Motd():
+    #Gives the day, i.e monday, as a number :3
+    theTime = time.localtime()
+    dayNum = theTime.tm_wday
+    #Grabs the Motd from the text file :3
+    motdFile = open("motd.txt", "r")
+    motd = motdFile.read() 
+    motd = motd.split("\n") 
+    theMsg = motd[dayNum]
     return [
     {
-        "motd": "funnie message go here lol x3"
+        "motd": theMsg
     }
 ]
 
