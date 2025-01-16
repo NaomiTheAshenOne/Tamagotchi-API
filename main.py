@@ -189,3 +189,14 @@ def Scran(drink: str):
 
     else:
         return (f"{drink} not found :<")
+    
+@app.get('/history')
+#NEEDS FINISHING!!
+def history():
+    historyFile = open("historyCache.txt", "r")
+    history = historyFile.read()
+    history = history.split("\n") 
+    lineAmount = min(len(history), 30)
+    history = history[-lineAmount:]
+    HistoryList = ''.join(history)
+    return HistoryList
