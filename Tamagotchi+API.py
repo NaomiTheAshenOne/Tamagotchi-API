@@ -1,5 +1,5 @@
-from flask import Flask, jsonify, request
-import time, random, threading
+from flask import Flask
+import time, random, threading, jsonify, json
 
 #Silly tamagotchi stat simulation :3
 class tamagotchi():
@@ -13,23 +13,34 @@ class tamagotchi():
     #Lowers the stats :D
     def lowerFood(self):
         while True:
-            time.sleep(10)
-            self.food = self.food - 1
             if self.food < 0:
                 self.food = 0
+            elif self.food > 100:
+                self.food = 100
+            else:
+                time.sleep(10)
+                self.food = self.food - 1
     def lowerWater(self):
         while True:
-            time.sleep(5)
-            self.water = self.water - 1
             if self.water < 0:
                 self.water = 0
+            elif self.water > 100:
+                self.water = 100
+            else:
+                time.sleep(5)
+                self.water = self.water - 1
     def lowerHappi(self):
         sadResult = 1
         while True:
-            time.sleep(1)
-            sadResult = random.randint(1,6)
-            if sadResult == 3:
-                self.happiness = self.happiness - 1
+            if self.happiness < 0:
+                self.happiness = 0
+            elif self.happiness > 100:
+                self.happiness = 100
+            else:
+                time.sleep(1)
+                sadResult = random.randint(1,6)
+                if sadResult == 3:
+                    self.happiness = self.happiness - 1
 
     #Creates threads for each of the stat lowering defs so they always run ^0^
     def simulate(self):
@@ -89,6 +100,9 @@ def FoodList():
         "foods": "food go here lol"       #list[str]
     }
 ]
+
+#@app.route('/Play', methods=["POST"])
+#def Play():
 
 if __name__ == "__main__":
     app.run(debug=True)
