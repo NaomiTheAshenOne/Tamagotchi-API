@@ -90,11 +90,13 @@ def Motd():
     #Gives the day, i.e monday, as a number :3
     theTime = time.localtime()
     dayNum = theTime.tm_wday
+    
     #Grabs the Motd from the text file :3
     motdFile = open("motd.txt", "r")
     motd = motdFile.read() 
     motd = motd.split("\n") 
     theMsg = motd[dayNum]
+    
     return [
     {
         "motd": theMsg
