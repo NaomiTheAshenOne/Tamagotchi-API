@@ -47,11 +47,11 @@ ies-
 
 
 ### Post /Water
-Feeds the Tamagotchi
+Waters the Tamagotchi
 {
 
 ### Post /Play
-Feeds the Tamagotchi
+Plays with the Tamagotchi
 {
 
 ### Post /

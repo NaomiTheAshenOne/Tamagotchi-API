@@ -37,11 +37,17 @@ class tamagotchi():
                 self.happiness = 0
             elif self.happiness > 100:
                 self.happiness = 100
+
+            if self.water <= 10 or self.food <= 10:
+                i = 2
+            if self.water <= 10 and self.food <= 10:
+                i = 1
             else:
-                time.sleep(1)
-                sadResult = random.randint(1,6)
-                if sadResult == 3:
-                    self.happiness = self.happiness - 1
+                i = 3
+            time.sleep(i)
+            sadResult = random.randint(1,6)
+            if sadResult == 3:
+                self.happiness = self.happiness - 1
 
     #Creates threads for each of the stat lowering defs so they always run ^0^
     def simulate(self):
@@ -68,13 +74,21 @@ app = FastAPI()
 @app.get('/hai')
 def status():
     
+    #makes happiMessage a list ^-^
     happiMessageFile = open("happiMessage.txt", "r")
     happiMessage = happiMessageFile.read() 
     happiMessage = happiMessage.split("\n") 
-    '''
-        if namigotchi.happiness:
-            pass
-    '''
+
+    if namigotchi.happiness >= 75:
+            i = random.randint(0,2)
+            hapMsg = happiMessage[i]
+    elif namigotchi.happiness < 75 and namigotchi.happiness >= 25:
+            i = random.randint(4,6)
+            hapMsg = happiMessage[i]
+    else:
+        i = random.randint(8,10)
+        hapMsg = happiMessage[i]
+    
     return [
     {
         "name": namigotchi.name,
@@ -88,7 +102,7 @@ def status():
         },
         "happiness": {
             "happiScore": str(namigotchi.happiness),
-            "happiMessage": "gay :3",
+            "happiMessage": hapMsg,
             "lastPlayedWith": "never - loner >:3"
         }
     }
@@ -121,6 +135,10 @@ def FoodList():
         }
 ]
 
-@app.post("/play")
-def play(pram: str):
-    return(f"HEy, {pram}")
+@app.post("/scran")
+def Scran(food: str):
+    foodList = json.load(open("foods.json"))
+    if food in foodList:
+        return foodList[food]
+    else:
+        return (f"{food} not found :<")
