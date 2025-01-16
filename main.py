@@ -1,5 +1,6 @@
-from flask import Flask
-import time, random, threading, jsonify, json, time
+from fastapi import FastAPI
+
+import time, random, threading, json, time
 
 #Silly tamagotchi stat simulation :3
 class tamagotchi():
@@ -62,10 +63,18 @@ class tamagotchi():
 namigotchi = tamagotchi()
 namigotchi.simulate()
 #namigotchi.interface()
-app = Flask(__name__)
+app = FastAPI()
 
-@app.route('/hai', methods=["GET"])
+@app.get('/hai')
 def status():
+    
+    happiMessageFile = open("happiMessage.txt", "r")
+    happiMessage = happiMessageFile.read() 
+    happiMessage = happiMessage.split("\n") 
+    '''
+        if namigotchi.happiness:
+            pass
+    '''
     return [
     {
         "name": namigotchi.name,
@@ -85,7 +94,7 @@ def status():
     }
 ]
 
-@app.route('/motd', methods=["GET"])
+@app.get('/motd')
 def Motd():
     #Gives the day, i.e monday, as a number :3
     theTime = time.localtime()
@@ -103,7 +112,7 @@ def Motd():
     }
 ]
 
-@app.route('/foodList', methods=["GET"])
+@app.get('/foodList')
 def FoodList():
     foods = json.load(open("foods.json"))
     return [
@@ -112,10 +121,6 @@ def FoodList():
         }
 ]
 
-#@app.route("/play", methods=["POST"])
-#def play():
-
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.post("/play")
+def play(pram: str):
+    return(f"HEy, {pram}")
