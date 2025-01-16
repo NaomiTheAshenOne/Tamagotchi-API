@@ -138,7 +138,28 @@ def FoodList():
 @app.post("/scran")
 def Scran(food: str):
     foodList = json.load(open("foods.json"))
+    #If the food entered exists it adds the stats :D
     if food in foodList:
-        return foodList[food]
+        foodItem = foodList[food]
+        if "food" in foodItem:
+            namigotchi.food = namigotchi.food + foodItem["food"]
+            if namigotchi.food > 100:
+                namigotchi.food = 100
+            if namigotchi.food < 0:
+                namigotchi.food = 0
+        if "water" in foodItem:
+            namigotchi.water = namigotchi.water + foodItem["water"]
+            if namigotchi.water > 100:
+                namigotchi.water = 100
+            if namigotchi.water < 0:
+                namigotchi.water = 0
+        if "happiness" in foodItem:
+            namigotchi.happiness = namigotchi.happiness + foodItem["happiness"]
+            if namigotchi.happiness > 100:
+                namigotchi.happiness = 100
+            if namigotchi.happiness < 0:
+                namigotchi.happiness = 0
+        return (f"{food} was consumed :D")
+
     else:
         return (f"{food} not found :<")
