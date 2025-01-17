@@ -58,17 +58,17 @@ class tamagotchi():
         foodThread.start()
         waterThread.start()
         happiThread.start()
-    
-    #Currently just a debug output :P
-    def interface(self):
-        while True:
-            print(f"Food: {self.food}")
-            print(f"Water: {self.water}")
-            print(f"Happi: {self.happiness}")
+
+class lastx():
+    def __init__(self):
+        self.lastfed = "never"
+        self.lastdrank = "never"
+        self.lastplayed = "never"
 
 namigotchi = tamagotchi()
+last = lastx()
 namigotchi.simulate()
-#namigotchi.interface()
+
 app = FastAPI()
 
 @app.get('/hai')
@@ -94,11 +94,11 @@ def status():
         "name": namigotchi.name,
         "food": {
             "hunger": str(namigotchi.food),
-            "lastFed": "never :3"
+            "lastFed": last.lastfed
         },
         "water": {
             "thirst": str(namigotchi.water),
-            "lastWatered": "your meant to water them?!?!?!"
+            "lastWatered": last.lastfed
         },
         "happiness": {
             "happiScore": str(namigotchi.happiness),
@@ -140,7 +140,7 @@ def drinkList():
     drinks = json.load(open("drinks.json"))
     return [
         {
-            "foods": drinks
+            "drinks": drinks
         }
 ]
 
@@ -198,6 +198,9 @@ def Scran(food: str):
             contents.write("\n")
         with open("historyCache.txt","a") as contents:
             contents.write(save)
+        CurrentTime = datetime.datetime.now()
+        CurrentTime = str(CurrentTime)
+        last.lastfed = CurrentTime
         return (f"{food} was consumed :D")
 
     else:
@@ -233,6 +236,9 @@ def Scran(drink: str):
             contents.write("\n")
         with open("historyCache.txt","a") as contents:
             contents.write(save)
+        CurrentTime = datetime.datetime.now()
+        CurrentTime = str(CurrentTime)
+        last.lastdrank = CurrentTime
         return (f"{drink} was consumed :D")
 
     else:
