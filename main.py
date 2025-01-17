@@ -1,7 +1,19 @@
 from fastapi import FastAPI
+from pathlib import Path
+import time, random, threading, json, time, datetime, os
 
-import time, random, threading, json, time, datetime
+#Deletes any pervious historys :,c
+pathCheck = Path("historyCache")
+if pathCheck.exists():
+    os.remove("historyCache.txt")
 
+#Makes a new historyCache :D
+CurrentTime = datetime.datetime.now()
+creationTime = str(CurrentTime)
+with open("historyCache.txt", mode='w') as historyCache:
+    historyCache.write(creationTime)
+    historyCache.write(" A new Nami was born :3")
+    
 #Silly tamagotchi stat simulation :3
 class tamagotchi():
 
@@ -119,13 +131,14 @@ def status():
     return [
     {
         "name": namigotchi.name,
+        "Birthday": creationTime,
         "food": {
             "hunger": str(namigotchi.food),
             "lastFed": last.lastfed
         },
         "water": {
             "thirst": str(namigotchi.water),
-            "lastWatered": last.lastfed
+            "lastWatered": last.lastdrank
         },
         "happiness": {
             "happiScore": str(namigotchi.happiness),
