@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-import time, random, threading, json, time
+import time, random, threading, json, time, datetime
 
 #Silly tamagotchi stat simulation :3
 class tamagotchi():
@@ -144,6 +144,30 @@ def drinkList():
         }
 ]
 
+@app.get('/history')
+#History display system - shows the first 30 lines :3
+def history():
+    with open("historyCache.txt") as file:
+        file = file.read()
+        file = file.split("\n")
+        lineNumber = len(file)
+        file = iter(file)
+        if lineNumber >= 30: 
+            history = [next(file) for _ in range(30)] 
+            return [
+    {
+        "history": history
+    }
+]
+        else:
+            history = [next(file) for _ in range(lineNumber)] 
+            return [
+    {
+        "history": history
+    }
+]
+            
+
 @app.post("/scran")
 def Scran(food: str):
     foodList = json.load(open("foods.json"))
@@ -162,6 +186,18 @@ def Scran(food: str):
                 namigotchi.happiness = 100
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
+        #adds what was consumed and time to the history list :3
+        with open("historyCache.txt","r") as contents:
+            save = contents.read()
+        with open("historyCache.txt","w") as contents:
+            CurrentTime = datetime.datetime.now()
+            CurrentTime = str(CurrentTime)
+            contents.write(CurrentTime)
+            contents.write(" ")
+            contents.write(food)
+            contents.write("\n")
+        with open("historyCache.txt","a") as contents:
+            contents.write(save)
         return (f"{food} was consumed :D")
 
     else:
@@ -185,18 +221,19 @@ def Scran(drink: str):
                 namigotchi.happiness = 100
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
+        #adds what was consumed and time to the history list :3 - MAKE THIS INTO A DEF!
+        with open("historyCache.txt","r") as contents:
+            save = contents.read()
+        with open("historyCache.txt","w") as contents:
+            CurrentTime = datetime.datetime.now()
+            CurrentTime = str(CurrentTime)
+            contents.write(CurrentTime)
+            contents.write(" ")
+            contents.write(drink)
+            contents.write("\n")
+        with open("historyCache.txt","a") as contents:
+            contents.write(save)
         return (f"{drink} was consumed :D")
 
     else:
         return (f"{drink} not found :<")
-    
-@app.get('/history')
-#NEEDS FINISHING!!
-def history():
-    historyFile = open("historyCache.txt", "r")
-    history = historyFile.read()
-    history = history.split("\n") 
-    lineAmount = min(len(history), 30)
-    history = history[-lineAmount:]
-    HistoryList = ''.join(history)
-    return HistoryList
