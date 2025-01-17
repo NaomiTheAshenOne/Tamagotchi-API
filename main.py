@@ -65,6 +65,33 @@ class lastx():
         self.lastdrank = "never"
         self.lastplayed = "never"
 
+class HistoryCacheUpdate():
+    
+    def __init__(self, food="", drink="", play=""):
+        
+        #Checks which sort of item it is ;3
+        if food:
+            self.item = food
+        elif drink:
+            self.item = drink
+        elif play:
+            self.item = play
+        self.updateHistory()
+
+    def updateHistory(self):
+        #adds what was consumed and time to the history list :3
+        with open("historyCache.txt","r") as contents:
+            save = contents.read()
+        with open("historyCache.txt","w") as contents:
+            CurrentTime = datetime.datetime.now()
+            CurrentTime = str(CurrentTime)
+            contents.write(CurrentTime)
+            contents.write(" ")
+            contents.write(self.item)
+            contents.write("\n")
+        with open("historyCache.txt","a") as contents:
+            contents.write(save)
+
 namigotchi = tamagotchi()
 last = lastx()
 namigotchi.simulate()
@@ -187,17 +214,8 @@ def Scran(food: str):
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
         #adds what was consumed and time to the history list :3
-        with open("historyCache.txt","r") as contents:
-            save = contents.read()
-        with open("historyCache.txt","w") as contents:
-            CurrentTime = datetime.datetime.now()
-            CurrentTime = str(CurrentTime)
-            contents.write(CurrentTime)
-            contents.write(" ")
-            contents.write(food)
-            contents.write("\n")
-        with open("historyCache.txt","a") as contents:
-            contents.write(save)
+        HistoryCacheUpdate(food)
+        #updates last fed
         CurrentTime = datetime.datetime.now()
         CurrentTime = str(CurrentTime)
         last.lastfed = CurrentTime
@@ -225,17 +243,8 @@ def Scran(drink: str):
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
         #adds what was consumed and time to the history list :3 - MAKE THIS INTO A DEF!
-        with open("historyCache.txt","r") as contents:
-            save = contents.read()
-        with open("historyCache.txt","w") as contents:
-            CurrentTime = datetime.datetime.now()
-            CurrentTime = str(CurrentTime)
-            contents.write(CurrentTime)
-            contents.write(" ")
-            contents.write(drink)
-            contents.write("\n")
-        with open("historyCache.txt","a") as contents:
-            contents.write(save)
+        HistoryCacheUpdate(drink)
+        #updates last drank :0
         CurrentTime = datetime.datetime.now()
         CurrentTime = str(CurrentTime)
         last.lastdrank = CurrentTime
