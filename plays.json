@@ -1,0 +1,23 @@
+{
+    "Fetch": {
+                        "food": -35,
+                        "water": -15,
+                        "happiness": 25
+                        },
+    "Chase": {
+                  "food": -15,
+                  "water": -35,
+                  "happiness": 25
+                  },
+    "Fortnite": {
+                      "food": -5,
+                      "water": -5,
+                      "happiness": 5
+                      },
+    "Celeste": {
+                                            "food": -10,
+                                            "water": -10,
+                                            "happiness": 20
+                                            }
+    
+  }

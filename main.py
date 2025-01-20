@@ -176,11 +176,20 @@ def FoodList():
 ]
 
 @app.get('/drinkList')
-def drinkList():
+def DrinkList():
     drinks = json.load(open("drinks.json"))
     return [
         {
             "drinks": drinks
+        }
+]
+
+@app.get('/playList')
+def PlayList():
+    plays = json.load(open("plays.json"))
+    return [
+        {
+            "Activities": plays
         }
 ]
 
@@ -227,18 +236,18 @@ def Scran(food: str):
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
         #adds what was consumed and time to the history list :3
-        HistoryCacheUpdate(food)
+        HistoryCacheUpdate(f"{food} was eaten :D")
         #updates last fed
         CurrentTime = datetime.datetime.now()
         CurrentTime = str(CurrentTime)
         last.lastfed = CurrentTime
-        return (f"{food} was consumed :D")
+        return (f"{food} was eaten :D")
 
     else:
         return (f"{food} not found :<")
 
 @app.post("/hydrate")
-def Scran(drink: str):
+def Hyrdrate(drink: str):
     drinkList = json.load(open("drinks.json"))
     #If the food entered exists it adds the stats :D
     if drink in drinkList:
@@ -256,12 +265,47 @@ def Scran(drink: str):
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
         #adds what was consumed and time to the history list :3 - MAKE THIS INTO A DEF!
-        HistoryCacheUpdate(drink)
+        HistoryCacheUpdate(f"{drink} was drank :3")
         #updates last drank :0
         CurrentTime = datetime.datetime.now()
         CurrentTime = str(CurrentTime)
         last.lastdrank = CurrentTime
-        return (f"{drink} was consumed :D")
+        return (f"{drink} was drank :3")
 
     else:
         return (f"{drink} not found :<")
+    
+@app.post("/play")
+def PlayWith(play: str):
+    playList = json.load(open("plays.json"))
+    #If the food entered exists it adds the stats :D
+    if play in playList:
+        foodItem = playList[play]
+        if "water" in foodItem:
+            namigotchi.water = namigotchi.water + foodItem["water"]
+            if namigotchi.water > 100:
+                namigotchi.water = 100
+            if namigotchi.water < 0:
+                namigotchi.water = 0
+        if "food" in foodItem:
+            namigotchi.food = namigotchi.food + foodItem["food"]
+            if namigotchi.food > 100:
+                namigotchi.food = 100
+            if namigotchi.food < 0:
+                namigotchi.food = 0
+        if "happiness" in foodItem:
+            namigotchi.happiness = namigotchi.happiness + foodItem["happiness"]
+            if namigotchi.happiness > 100:
+                namigotchi.happiness = 100
+            if namigotchi.happiness < 0:
+                namigotchi.happiness = 0
+        #adds what was consumed and time to the history list :3 - MAKE THIS INTO A DEF!
+        HistoryCacheUpdate(f"{play} was played ^-^")
+        #updates last drank :0
+        CurrentTime = datetime.datetime.now()
+        CurrentTime = str(CurrentTime)
+        last.lastdrank = CurrentTime
+        return (f"{play} was played ^-^")
+
+    else:
+        return (f"{play} not found :<")
