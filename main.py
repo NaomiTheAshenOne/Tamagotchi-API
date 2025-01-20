@@ -143,7 +143,7 @@ def status():
         "happiness": {
             "happiScore": str(namigotchi.happiness),
             "happiMessage": hapMsg,
-            "lastPlayedWith": "never - loner >:3"
+            "lastPlayedWith": last.lastplayed
         }
     }
 ]
@@ -264,7 +264,7 @@ def Hyrdrate(drink: str):
                 namigotchi.happiness = 100
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
-        #adds what was consumed and time to the history list :3 - MAKE THIS INTO A DEF!
+        #adds what was consumed and time to the history list :3
         HistoryCacheUpdate(f"{drink} was drank :3")
         #updates last drank :0
         CurrentTime = datetime.datetime.now()
@@ -299,12 +299,12 @@ def PlayWith(play: str):
                 namigotchi.happiness = 100
             if namigotchi.happiness < 0:
                 namigotchi.happiness = 0
-        #adds what was consumed and time to the history list :3 - MAKE THIS INTO A DEF!
+        #adds what was consumed and time to the history list :3
         HistoryCacheUpdate(f"{play} was played ^-^")
         #updates last drank :0
         CurrentTime = datetime.datetime.now()
         CurrentTime = str(CurrentTime)
-        last.lastdrank = CurrentTime
+        last.lastplayed = CurrentTime
         return (f"{play} was played ^-^")
 
     else:
